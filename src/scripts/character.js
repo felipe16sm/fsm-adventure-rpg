@@ -11,19 +11,23 @@ class Character {
     switch (this.charClass) {
       case "warrior":
         this.HP = 9.5 + this.level * 1.5;
+        this.HP_TOTAL = 9.5 + this.level * 1.5;
         this.ATTACK = this.level * 1.5;
         this.DEFENSE = this.level * 1.5;
         this.AGILITY = this.level;
         this.MP = 0;
+        this.MP_TOTAL = 0;
         this.MAGIC_ATTACK = 0;
         this.MAGIC_DEFENSE = 0;
         break;
       case "mage":
         this.HP = 9 + this.level;
+        this.HP_TOTAL = 9 + this.level;
         this.ATTACK = this.level;
         this.DEFENSE = this.level;
         this.AGILITY = this.level * 1.5;
         this.MP = 9 + this.level;
+        this.MP_TOTAL = 9 + this.level;
         this.MAGIC_ATTACK = this.level * 1.5;
         this.MAGIC_DEFENSE = this.level * 1.5;
         break;
