@@ -19,6 +19,8 @@ class CharacterCard {
 
     this.generateStatusProgressMPBarInfo();
 
+    this.generateStatusProgressXPBarInfo();
+
     this.generateStatusAttackInfo();
 
     this.generateStatusDefenseInfo();
@@ -46,6 +48,10 @@ class CharacterCard {
     const levelElement = document.createElement("div");
     levelElement.style.fontSize = "12px";
     levelElement.textContent = `Level ${this.character.level}`;
+
+    document.addEventListener(`changeLevel-${this.character.id}`, () => {
+      levelElement.textContent = `Level ${this.character.level}`;
+    });
 
     const iconElement = document.createElement("div");
 
@@ -75,6 +81,11 @@ class CharacterCard {
       characterHPBar.changeValue(this.character.HP);
     });
 
+    document.addEventListener(`changeAll-${this.character.id}`, () => {
+      characterHPBar.changeValue(this.character.HP);
+      characterHPBar.changeTotalValue(this.character.HP_TOTAL);
+    });
+
     this.statusProgressHPBarInfo = new StatusProgressBarInfo({
       label: "HP",
       progressBar: characterHPBar,
@@ -97,6 +108,11 @@ class CharacterCard {
         characterMPBar.changeValue(this.character.MP);
       });
 
+      document.addEventListener(`changeAll-${this.character.id}`, () => {
+        characterMPBar.changeValue(this.character.MP);
+        characterMPBar.changeTotalValue(this.character.MP_TOTAL);
+      });
+
       this.statusProgressMPBarInfo = new StatusProgressBarInfo({
         label: "MP",
         progressBar: characterMPBar,
@@ -108,10 +124,39 @@ class CharacterCard {
     }
   }
 
+  generateStatusProgressXPBarInfo() {
+    const characterXPBar = new ProgressBar({
+      value: this.character.XP,
+      totalValue: 100,
+      barColor: "#00FF00",
+    });
+
+    document.addEventListener(`changeXP-${this.character.id}`, () => {
+      characterXPBar.changeValue(this.character.XP);
+    });
+
+    document.addEventListener(`changeAll-${this.character.id}`, () => {
+      characterXPBar.changeValue(this.character.XP);
+    });
+
+    this.statusProgressXPBarInfo = new StatusProgressBarInfo({
+      label: "XP",
+      progressBar: characterXPBar,
+    });
+
+    this.statusProgressXPBarInfo.element.style.marginBottom = "16px";
+
+    this.element.appendChild(this.statusProgressXPBarInfo.element);
+  }
+
   generateStatusAttackInfo() {
     this.statusAttackInfo = new StatusInfo({
       label: "Attack",
       value: this.character.ATTACK,
+    });
+
+    document.addEventListener(`changeAll-${this.character.id}`, () => {
+      this.statusAttackInfo.changeValue(this.character.ATTACK);
     });
 
     this.statusAttackInfo.element.style.marginBottom = "16px";
@@ -125,6 +170,10 @@ class CharacterCard {
       value: this.character.DEFENSE,
     });
 
+    document.addEventListener(`changeAll-${this.character.id}`, () => {
+      this.statusDefenseInfo.changeValue(this.character.DEFENSE);
+    });
+
     this.statusDefenseInfo.element.style.marginBottom = "16px";
 
     this.element.appendChild(this.statusDefenseInfo.element);
@@ -134,6 +183,10 @@ class CharacterCard {
     this.statusAgilityInfo = new StatusInfo({
       label: "Agility",
       value: this.character.AGILITY,
+    });
+
+    document.addEventListener(`changeAll-${this.character.id}`, () => {
+      this.statusAgilityInfo.changeValue(this.character.AGILITY);
     });
 
     this.statusAgilityInfo.element.style.marginBottom = "16px";
@@ -147,6 +200,10 @@ class CharacterCard {
       value: this.character.MAGIC_ATTACK,
     });
 
+    document.addEventListener(`changeAll-${this.character.id}`, () => {
+      this.statusMagicAttackInfo.changeValue(this.character.MAGIC_ATTACK);
+    });
+
     this.statusMagicAttackInfo.element.style.marginBottom = "16px";
 
     this.element.appendChild(this.statusMagicAttackInfo.element);
@@ -156,6 +213,10 @@ class CharacterCard {
     this.statusMagicDefenseInfo = new StatusInfo({
       label: "Magic Defense",
       value: this.character.MAGIC_DEFENSE,
+    });
+
+    document.addEventListener(`changeAll-${this.character.id}`, () => {
+      this.statusMagicDefenseInfo.changeValue(this.character.MAGIC_DEFENSE);
     });
 
     this.element.appendChild(this.statusMagicDefenseInfo.element);
