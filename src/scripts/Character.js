@@ -1,5 +1,6 @@
 class Character {
-  constructor({ name, charClass, level }) {
+  constructor({ id, name, charClass, level }) {
+    this.id = id;
     this.name = name;
     this.charClass = charClass;
     this.level = level;
@@ -57,7 +58,7 @@ class Character {
         }
 
         damage = this.MAGIC_ATTACK - enemy.MAGIC_DEFENSE;
-        this.setMP(this.MP - 1);
+        this.changeMP(this.MP - 1);
         break;
     }
 
@@ -65,24 +66,30 @@ class Character {
       damage = 1;
     }
 
-    enemy.setHP(enemy.HP - damage);
+    enemy.changeHP(enemy.HP - damage);
 
     console.log(`${damage} damage in ${enemy.name}`);
   }
 
-  setHP(value) {
+  changeHP(value) {
     if (value < 0) {
       this.HP = 0;
     } else {
       this.HP = value;
     }
+
+    const event = new CustomEvent(`changeHP-${this.id}`);
+    document.dispatchEvent(event);
   }
 
-  setMP(value) {
+  changeMP(value) {
     if (value < 0) {
       this.MP = 0;
     } else {
       this.MP = value;
     }
+
+    const event = new CustomEvent(`changeMP-${this.id}`);
+    document.dispatchEvent(event);
   }
 }
