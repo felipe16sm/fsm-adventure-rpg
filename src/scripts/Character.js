@@ -4,6 +4,7 @@ class Character {
     this.name = name;
     this.charClass = charClass;
     this.level = level;
+    this.XP = 0;
 
     this.generateAttributes();
   }
@@ -68,6 +69,8 @@ class Character {
 
     enemy.changeHP(enemy.HP - damage);
 
+    this.addXP(damage);
+
     console.log(`${damage} damage in ${enemy.name}`);
   }
 
@@ -90,6 +93,27 @@ class Character {
     }
 
     const event = new CustomEvent(`changeMP-${this.id}`);
+    document.dispatchEvent(event);
+  }
+
+  addXP(value) {
+    if (value + this.XP >= 100) {
+      this.XP = 100 - (value + this.XP);
+      this.levelUP();
+      this.generateAttributes();
+      const event = new CustomEvent(`changeAll-${this.id}`);
+      document.dispatchEvent(event);
+    } else {
+      this.XP = this.XP + value;
+      const event = new CustomEvent(`changeXP-${this.id}`);
+      document.dispatchEvent(event);
+    }
+  }
+
+  levelUP() {
+    this.level++;
+
+    const event = new CustomEvent(`changeLevel-${this.id}`);
     document.dispatchEvent(event);
   }
 }

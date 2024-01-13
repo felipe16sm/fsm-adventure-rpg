@@ -22,6 +22,10 @@ setTimeout(() => {
   player.attackEnemy(enemy, "magic");
   setTimeout(() => {
     player.attackEnemy(enemy, "magic");
+
+    for (let i = 0; i <= 330; i++) {
+      player.attackEnemy(enemy, "physical");
+    }
   }, 1000);
 }, 1000);
 

@@ -33,4 +33,9 @@ class StatusInfo {
     this.valueElement.style.width = "80px";
     this.valueElement.textContent = this.value;
   }
+
+  changeValue(value) {
+    this.value = value;
+    this.paintValue();
+  }
 }
