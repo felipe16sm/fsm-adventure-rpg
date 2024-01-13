@@ -1,0 +1,15 @@
+.sword {
+    width: 32px;
+    height: 32px;
+    background-image: url('../images/icons-assets.png');
+    background-position: -32px -160px;
+    background-repeat: no-repeat;
+}
+
+.staff2 {
+    width: 32px;
+    height: 32px;
+    background-image: url('../images/icons-assets.png');
+    background-position: -288px -192px;
+    background-repeat: no-repeat;
+}

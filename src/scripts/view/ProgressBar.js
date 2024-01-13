@@ -43,6 +43,7 @@ class ProgressBar {
 
   changeTotalValue(value) {
     this.totalValue = value;
+
     this.paintBar();
 
     const event = new CustomEvent("changeProgressBarTotalValue");

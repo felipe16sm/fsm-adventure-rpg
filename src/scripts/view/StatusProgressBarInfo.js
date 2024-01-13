@@ -1,4 +1,4 @@
-class StatusInfo {
+class StatusProgressBarInfo {
   element = document.createElement("div");
   labelElement = document.createElement("div");
   infoElement = document.createElement("div");
@@ -8,6 +8,13 @@ class StatusInfo {
     this.progressBar = progressBar;
 
     this.generateStatusInfo();
+
+    document.addEventListener("changeProgressBarValue", () => {
+      this.paintInfo();
+    });
+    document.addEventListener("changeProgressBarTotalValue", () => {
+      this.paintInfo();
+    });
   }
 
   generateStatusInfo() {
@@ -18,13 +25,6 @@ class StatusInfo {
 
     this.paintLabel();
     this.paintInfo();
-
-    document.addEventListener("changeProgressBarValue", () => {
-      this.paintInfo();
-    });
-    document.addEventListener("changeProgressBarTotalValue", () => {
-      this.paintInfo();
-    });
 
     this.element.appendChild(this.labelElement);
     this.element.appendChild(this.progressBar.element);
