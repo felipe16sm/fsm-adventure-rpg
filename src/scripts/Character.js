@@ -40,10 +40,12 @@ class Character {
     const evadeFactor = (enemy.AGILITY * 0.5) / (enemy.AGILITY + this.AGILITY);
     const drawEvadeChance = Math.random();
 
-    if (evadeFactor > drawEvadeChance) {
-      console.log("Evaded!");
+    if (type === "magic") {
+      this.changeMP(this.MP - 1);
+    }
 
-      return;
+    if (evadeFactor > drawEvadeChance) {
+      return { damage: 0, status: "EVADED" };
     }
 
     let damage;
@@ -54,12 +56,10 @@ class Character {
         break;
       case "magic":
         if (this.MP <= 0) {
-          console.log("No MP");
-          return;
+          return { damage: 0, status: "NO_MP" };
         }
 
         damage = this.MAGIC_ATTACK - enemy.MAGIC_DEFENSE;
-        this.changeMP(this.MP - 1);
         break;
     }
 
@@ -71,7 +71,7 @@ class Character {
 
     this.addXP(damage);
 
-    console.log(`${damage} damage in ${enemy.name}`);
+    return { damage, status: "SUCCESS" };
   }
 
   changeHP(value) {
