@@ -12,10 +12,20 @@ class ChooseCharacterModal extends Modal {
   constructor() {
     super();
 
+    this.verifyPlayerCreated();
+
     this.modalContainerElement.style.display = "flex";
     this.modalContainerElement.style.flexDirection = "column";
 
     this.generateChooseCharacterModal();
+  }
+
+  verifyPlayerCreated() {
+    const playerCharacter = localStorage.getItem("player");
+
+    if (playerCharacter) {
+      this.redirectToMainScreenLayout();
+    }
   }
 
   generateChooseCharacterModal() {
@@ -38,6 +48,14 @@ class ChooseCharacterModal extends Modal {
 
     playerNameInputElement.addEventListener("change", (e) => {
       this.playerName = e.target.value;
+    });
+
+    playerNameInputElement.addEventListener("keyup", (e) => {
+      if (e.code === "Enter") {
+        this.createPlayer();
+      } else {
+        this.playerName = e.target.value;
+      }
     });
 
     this.modalContainerElement.appendChild(playerNameLabelElement);
@@ -90,19 +108,45 @@ class ChooseCharacterModal extends Modal {
     button.element.style.margin = "8px 0 0 0";
 
     button.element.addEventListener("click", () => {
-      if (!this.playerName) {
-        this.errorElement.style.display = "block";
-        this.errorElement.textContent = "Digite o nome do player";
-        return;
-      }
-
-      const data = { name: this.playerName, class: this.selectedClass };
-
-      localStorage.setItem("player", JSON.stringify(data));
-
-      this.closeModal();
+      this.createPlayer();
     });
 
     this.modalContainerElement.appendChild(button.element);
+  }
+
+  createPlayer() {
+    if (!this.playerName) {
+      this.errorElement.style.display = "block";
+      this.errorElement.textContent = "Digite o nome do player";
+      return;
+    }
+
+    const playerCharacter = new Character({
+      id: UUID.generateUUIDv4(),
+      name: this.playerName,
+      charClass: this.selectedClass,
+      level: 1,
+    });
+
+    const data = {
+      id: playerCharacter.id,
+      name: this.playerName,
+      charClass: this.selectedClass,
+      HP: playerCharacter.HP,
+      MP: playerCharacter.MP,
+      XP: playerCharacter.XP,
+      level: playerCharacter.level,
+    };
+
+    localStorage.setItem("player", JSON.stringify(data));
+
+    this.redirectToMainScreenLayout();
+    this.closeModal();
+  }
+
+  redirectToMainScreenLayout() {
+    document.body.innerHTML = "";
+
+    document.body.appendChild(new MainScreenLayout().element);
   }
 }
