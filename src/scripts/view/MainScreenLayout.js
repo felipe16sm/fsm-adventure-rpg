@@ -139,6 +139,20 @@ class MainScreenLayout {
     this.sideBarElement.style.padding = "20px";
 
     this.contentElement.style.padding = "20px";
+    this.contentElement.style.display = "flex";
+    this.contentElement.style.width = "100%";
+    this.contentElement.style.flexDirection = "column";
+    this.contentElement.style.alignItems = "center";
+
+    const titleMessageContentElement = document.createElement("h2");
+
+    titleMessageContentElement.textContent =
+      "Bem vindo! Clique em Explorar e escolha uma zona de combate ou clique em Descansar para recuperar o HP e o MP";
+
+    titleMessageContentElement.style.textAlign = "center";
+    titleMessageContentElement.style.lineHeight = "40px";
+
+    this.contentElement.appendChild(titleMessageContentElement);
 
     this.generateMenuItem({
       action: () => {
@@ -149,7 +163,7 @@ class MainScreenLayout {
 
     this.generateMenuItem({
       action: () => {
-        console.log("Teste");
+        this.restPlayer();
       },
       label: "Descansar",
     });
@@ -187,5 +201,41 @@ class MainScreenLayout {
     });
 
     this.sideBarElement.appendChild(itemElement);
+  }
+
+  restPlayer() {
+    this.contentElement.innerHTML = "";
+
+    const restMessageElement = document.createElement("h1");
+
+    restMessageElement.textContent = "Descansando...";
+    restMessageElement.style.textAlign = "center  ";
+
+    const spinner = new Spinner();
+    spinner.element.style.margin = "16px 0";
+
+    setTimeout(() => {
+      this.playerCharacter.changeHP(this.playerCharacter.HP_TOTAL);
+      this.playerCharacter.changeMP(this.playerCharacter.MP_TOTAL);
+
+      const data = {
+        id: this.playerCharacter.id,
+        name: this.playerCharacter.name,
+        charClass: this.playerCharacter.charClass,
+        HP: this.playerCharacter.HP,
+        MP: this.playerCharacter.MP,
+        XP: this.playerCharacter.XP,
+        level: this.playerCharacter.level,
+      };
+
+      localStorage.setItem("player", JSON.stringify(data));
+
+      restMessageElement.textContent = "HP e MP restaurados";
+
+      this.contentElement.removeChild(spinner.element);
+    }, 1500);
+
+    this.contentElement.appendChild(restMessageElement);
+    this.contentElement.appendChild(spinner.element);
   }
 }
