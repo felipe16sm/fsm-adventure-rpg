@@ -96,6 +96,12 @@ class Character {
     document.dispatchEvent(event);
   }
 
+  changeXP(value) {
+    this.XP = value;
+    const event = new CustomEvent(`changeXP-${this.id}`);
+    document.dispatchEvent(event);
+  }
+
   addXP(value) {
     if (value + this.XP >= 100) {
       this.XP = 100 - (value + this.XP);
