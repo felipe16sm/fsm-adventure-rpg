@@ -156,7 +156,7 @@ class MainScreenLayout {
 
     this.generateMenuItem({
       action: () => {
-        console.log("Teste");
+        this.exploreZones();
       },
       label: "Explorar",
     });
@@ -209,7 +209,7 @@ class MainScreenLayout {
     const restMessageElement = document.createElement("h1");
 
     restMessageElement.textContent = "Descansando...";
-    restMessageElement.style.textAlign = "center  ";
+    restMessageElement.style.textAlign = "center";
 
     const spinner = new Spinner();
     spinner.element.style.margin = "16px 0";
@@ -237,5 +237,264 @@ class MainScreenLayout {
 
     this.contentElement.appendChild(restMessageElement);
     this.contentElement.appendChild(spinner.element);
+  }
+
+  exploreZones() {
+    this.contentElement.innerHTML = "";
+
+    const titleElement = document.createElement("h1");
+
+    titleElement.textContent = "Zonas";
+    titleElement.style.textAlign = "center";
+
+    const zonesContainerElement = document.createElement("div");
+
+    zonesContainerElement.style.display = "flex";
+    zonesContainerElement.style.flexWrap = "wrap";
+    zonesContainerElement.style.justifyContent = "space-between";
+    zonesContainerElement.style.width = "100%";
+    zonesContainerElement.style.margin = "20px";
+
+    const zoneItemElement = ({ title, subtitle, action }) => {
+      const containerElement = document.createElement("div");
+
+      containerElement.style.backgroundColor = "#0A8A48";
+      containerElement.style.display = "flex";
+      containerElement.style.flexDirection = "column";
+      containerElement.style.justifyContent = "center";
+      containerElement.style.alignItems = "center";
+      containerElement.style.borderRadius = "4px";
+      containerElement.style.cursor = "pointer";
+      containerElement.style.userSelect = "none";
+      containerElement.style.color = "#FFF";
+      containerElement.style.fontSize = "12px";
+      containerElement.style.padding = "8px 0";
+      containerElement.style.margin = "8px";
+      containerElement.style.width = "360px";
+
+      const titleElement = document.createElement("span");
+
+      titleElement.textContent = title;
+      titleElement.style.margin = "0 0 8px 0";
+
+      const subtitleElement = document.createElement("span");
+
+      subtitleElement.textContent = subtitle;
+
+      containerElement.addEventListener("click", () => {
+        action && action();
+      });
+
+      containerElement.addEventListener("mouseover", () => {
+        containerElement.style.backgroundColor = "#12c96b";
+      });
+
+      containerElement.addEventListener("mouseleave", () => {
+        containerElement.style.backgroundColor = "#0A8A48";
+      });
+
+      containerElement.appendChild(titleElement);
+      containerElement.appendChild(subtitleElement);
+
+      return containerElement;
+    };
+
+    const tempestValey = zoneItemElement({
+      title: "Vale da Tempestade",
+      subtitle: "Level 1 -> 10",
+      action: () => {
+        this.goToFightZone({
+          enemyList: [
+            { name: "Goblin", charClass: "warrior" },
+            { name: "Orc", charClass: "warrior" },
+          ],
+          levelMin: 1,
+          levelMax: 10,
+        });
+      },
+    });
+
+    const forbiddenJungle = zoneItemElement({
+      title: "Selva Proibida",
+      subtitle: "Level 10 -> 20",
+      action: () => {
+        this.goToFightZone({
+          enemyList: [
+            { name: "Necromante Perverso", charClass: "mage" },
+            { name: "Engolidor de Almas", charClass: "mage" },
+          ],
+          levelMin: 10,
+          levelMax: 20,
+        });
+      },
+    });
+
+    const ruinPlateau = zoneItemElement({
+      title: "Planalto da ruína",
+      subtitle: "Level 20 -> 30",
+      action: () => {
+        this.goToFightZone({
+          enemyList: [
+            { name: "Elemental Caótico", charClass: "mage" },
+            { name: "Harpia Sanguinária", charClass: "warrior" },
+          ],
+          levelMin: 20,
+          levelMax: 30,
+        });
+      },
+    });
+
+    const canyonOfTheForgotten = zoneItemElement({
+      title: "Desfiladeiro dos Esquecidos",
+      subtitle: "Level 30 -> 40",
+      action: () => {
+        this.goToFightZone({
+          enemyList: [
+            { name: "Esqueleto Carniceiro", charClass: "warrior" },
+            { name: "Troll Trovejante", charClass: "warrior" },
+          ],
+          levelMin: 30,
+          levelMax: 40,
+        });
+      },
+    });
+
+    const cityOfShadows = zoneItemElement({
+      title: "Cidade das Sombras",
+      subtitle: "Level 40 -> 50",
+      action: () => {
+        this.goToFightZone({
+          enemyList: [
+            { name: "Serpente Venenosa", charClass: "warrior" },
+            { name: "Homúnculo Sinistro", charClass: "warrior" },
+          ],
+          levelMin: 40,
+          levelMax: 50,
+        });
+      },
+    });
+
+    const landOfSpirits = zoneItemElement({
+      title: "Terra dos Espíritos",
+      subtitle: "Level 50 -> 60",
+      action: () => {
+        this.goToFightZone({
+          enemyList: [
+            { name: "Bruxo das Sombras", charClass: "mage" },
+            { name: "Centauro Enlouquecido", charClass: "warrior" },
+          ],
+          levelMin: 50,
+          levelMax: 60,
+        });
+      },
+    });
+
+    const deathIsland = zoneItemElement({
+      title: "Ilha da morte",
+      subtitle: "Level 60 -> 70",
+      action: () => {
+        this.goToFightZone({
+          enemyList: [
+            { name: "Banshee Aterrorizante", charClass: "mage" },
+            { name: "Sombra Assassina", charClass: "warrior" },
+          ],
+          levelMin: 60,
+          levelMax: 70,
+        });
+      },
+    });
+
+    const lakeOfDespair = zoneItemElement({
+      title: "Lago do Desespero",
+      subtitle: "Level 70 -> 80",
+      action: () => {
+        this.goToFightZone({
+          enemyList: [
+            { name: "Gigante de Pedra", charClass: "warrior" },
+            { name: "Hidra Voraz", charClass: "warrior" },
+          ],
+          levelMin: 70,
+          levelMax: 80,
+        });
+      },
+    });
+
+    const sinisterGlacier = zoneItemElement({
+      title: "Geleira Sinistra",
+      subtitle: "Level 80 -> 90",
+      action: () => {
+        this.goToFightZone({
+          enemyList: [
+            { name: "Ciclope Devorador", charClass: "warrior" },
+            { name: "Elemental de Gelo", charClass: "mage" },
+          ],
+          levelMin: 80,
+          levelMax: 90,
+        });
+      },
+    });
+
+    const enchantedSwamp = zoneItemElement({
+      title: "Pântano Enfeitiçado",
+      subtitle: "Level 90 -> 100",
+      action: () => {
+        this.goToFightZone({
+          enemyList: [
+            { name: "Espectro Sombrio", charClass: "mage" },
+            { name: "Draconiano Cruel", charClass: "warrior" },
+          ],
+          levelMin: 90,
+          levelMax: 100,
+        });
+      },
+    });
+
+    zonesContainerElement.appendChild(tempestValey);
+    zonesContainerElement.appendChild(forbiddenJungle);
+    zonesContainerElement.appendChild(ruinPlateau);
+    zonesContainerElement.appendChild(canyonOfTheForgotten);
+    zonesContainerElement.appendChild(cityOfShadows);
+    zonesContainerElement.appendChild(landOfSpirits);
+    zonesContainerElement.appendChild(deathIsland);
+    zonesContainerElement.appendChild(lakeOfDespair);
+    zonesContainerElement.appendChild(sinisterGlacier);
+    zonesContainerElement.appendChild(enchantedSwamp);
+
+    this.contentElement.appendChild(titleElement);
+    this.contentElement.appendChild(zonesContainerElement);
+  }
+
+  rafleEnemy({ enemyList, levelMin, levelMax }) {
+    const positionSorted = Math.floor(Math.random() * enemyList.length);
+    const sortedLevel = Math.floor(
+      levelMin + Math.random() * (levelMax - levelMin + 1)
+    );
+
+    this.enemyCharacter = new Character({
+      id: UUID.generateUUIDv4(),
+      name: enemyList[positionSorted].name,
+      charClass: enemyList[positionSorted].charClass,
+      level: sortedLevel,
+    });
+  }
+
+  goToFightZone({ enemyList, levelMin, levelMax }) {
+    this.rafleEnemy({
+      enemyList,
+      levelMin,
+      levelMax,
+    });
+
+    const matchCard = new MatchCard({
+      playerCharacter: this.playerCharacter,
+      enemyCharacter: this.enemyCharacter,
+      leaveAction: () => {
+        this.goToFightZone({ enemyList, levelMin, levelMax });
+      },
+    });
+
+    this.contentElement.innerHTML = "";
+
+    this.contentElement.appendChild(matchCard.element);
   }
 }

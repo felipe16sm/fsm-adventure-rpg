@@ -42,8 +42,9 @@ class CharacterCard {
 
     const nameElement = document.createElement("div");
 
-    nameElement.style.fontSize = "20px";
+    nameElement.style.fontSize = "12px";
     nameElement.textContent = this.character.name;
+    nameElement.style.maxWidth = "160px";
 
     const levelElement = document.createElement("div");
     levelElement.style.fontSize = "12px";
