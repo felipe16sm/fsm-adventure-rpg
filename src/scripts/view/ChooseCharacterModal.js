@@ -12,20 +12,10 @@ class ChooseCharacterModal extends Modal {
   constructor() {
     super();
 
-    this.verifyPlayerCreated();
-
     this.modalContainerElement.style.display = "flex";
     this.modalContainerElement.style.flexDirection = "column";
 
     this.generateChooseCharacterModal();
-  }
-
-  verifyPlayerCreated() {
-    const playerCharacter = localStorage.getItem("player");
-
-    if (playerCharacter) {
-      this.redirectToMainScreenLayout();
-    }
   }
 
   generateChooseCharacterModal() {

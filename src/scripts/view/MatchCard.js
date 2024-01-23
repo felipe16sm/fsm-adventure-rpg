@@ -188,6 +188,11 @@ class MatchCard {
         );
 
         if (status === "SUCCESS") {
+          if (this.playerCharacter.HP === 0) {
+            const event = new CustomEvent("gameOver");
+            document.dispatchEvent(event);
+          }
+
           this.changeMessage(
             `${attackerCharacter.name} causou ${damage} de dano em ${defenderCharacter.name}`,
             messageColor
