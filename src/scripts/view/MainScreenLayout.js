@@ -3,6 +3,7 @@ class MainScreenLayout {
   sideBarElement = document.createElement("div");
   contentElement = document.createElement("div");
   playerTitleElement = document.createElement("div");
+  gameOverModal = new GameOverModal();
 
   constructor() {
     this.loadPlayerData();
@@ -168,6 +169,12 @@ class MainScreenLayout {
       label: "Descansar",
     });
 
+    document.addEventListener("gameOver", () => {
+      localStorage.clear();
+      this.gameOverModal.openModal();
+    });
+
+    document.body.appendChild(this.gameOverModal.element);
     this.element.appendChild(this.sideBarElement);
     this.element.appendChild(this.contentElement);
   }

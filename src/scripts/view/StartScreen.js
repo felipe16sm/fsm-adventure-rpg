@@ -5,7 +5,25 @@ class StartScreen {
     this.generateStartScreen();
   }
 
+  verifyPlayerCreated() {
+    const playerCharacter = localStorage.getItem("player");
+
+    if (playerCharacter) {
+      this.redirectToMainScreenLayout();
+
+      return true;
+    }
+
+    return false;
+  }
+
   generateStartScreen() {
+    const isPlayerCreated = this.verifyPlayerCreated();
+
+    if (isPlayerCreated) {
+      return;
+    }
+
     this.element.style.position = "relative";
     this.element.style.width = "100vw";
     this.element.style.height = "100vh";
@@ -56,5 +74,11 @@ class StartScreen {
     this.element.appendChild(backgroundImageElement);
     this.element.appendChild(titleElement);
     this.element.appendChild(startButton.element);
+  }
+
+  redirectToMainScreenLayout() {
+    document.body.innerHTML = "";
+
+    document.body.appendChild(new MainScreenLayout().element);
   }
 }
