@@ -4,10 +4,11 @@ class MatchCard {
   actionsPanelElement = document.createElement("div");
   spinnerElement = new Spinner().element;
 
-  constructor({ playerCharacter, enemyCharacter }) {
+  constructor({ playerCharacter, enemyCharacter, leaveAction }) {
     this.playerCharacter = playerCharacter;
     this.enemyCharacter = enemyCharacter;
     this.message = "Escolha uma ação";
+    this.leaveAction = leaveAction;
 
     this.generateMatchCard();
   }
@@ -74,6 +75,9 @@ class MatchCard {
       color: "#FFF",
       backgroundColor: "#00F",
       label: "Sair",
+      action: () => {
+        this.leaveAction && this.leaveAction();
+      },
     });
 
     this.actionsPanelElement.appendChild(physicalAttackButton.element);
